@@ -30,6 +30,9 @@ TagManager:
   - CoverPoint
   - Interactable
   - AIAction
+  - OldMan
+  - Bob
+  - Coin
   layers:
   - Default
   - TransparentFX
