@@ -35,6 +35,10 @@ public class BobDialogue : MonoBehaviour
     private Animator animator;
 
     public AudioSource typingAudioSource;
+    public AudioSource acceptSFX;
+    public AudioSource declineSFX;
+    public CoinManager coinManager;
+
 
     void Start()
     {
@@ -48,6 +52,19 @@ public class BobDialogue : MonoBehaviour
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && !isDialogueActive)
         {
             StartDialogue();
+        }
+        if (isDialogueActive && awaitingChoice)
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                acceptSFX.Play();
+                AcceptQuest();
+            }
+            else if (Input.GetKeyDown(KeyCode.N))
+            {
+                declineSFX.Play();
+                DeclineQuest();
+            }
         }
 
         if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
@@ -72,8 +89,9 @@ public class BobDialogue : MonoBehaviour
         {
             dialogueLines = new DialogueLine[]
             {
-            new DialogueLine { speaker = "Bob", line = "Thanks again for those coins!" }
+            new DialogueLine { speaker = "Bob", line = "You really came through for me — those coins will go a long way. I owe you one!" }
             };
+
             animator?.SetBool("isTalking", true);
             animator?.SetBool("questCompleted", false);
         }
@@ -82,10 +100,11 @@ public class BobDialogue : MonoBehaviour
         {
             dialogueLines = new DialogueLine[]
             {
-            new DialogueLine { speaker = "Bob", line = "Wow, you actually got them! Thanks!" },
-            new DialogueLine { speaker = "Player", line = "It was nothing." },
-            new DialogueLine { speaker = "Bob", line = "Here’s your reward!" }
+                new DialogueLine { speaker = "Bob", line = "Well I'll be! You actually found all five coins!" },
+                new DialogueLine { speaker = "Player", line = "Told you I’d come through." },
+                new DialogueLine { speaker = "Bob", line = "I can’t thank you enough. That really means a lot." }
             };
+
             animator?.SetBool("questCompleted", true);
             animator?.SetBool("isTalking", true);
 
@@ -106,12 +125,15 @@ public class BobDialogue : MonoBehaviour
         else
         {
             dialogueLines = new DialogueLine[]
-            {
-            new DialogueLine { speaker = "Bob", line = "Hey! Got any spare change?" },
-            new DialogueLine { speaker = "Player", line = "Nope, sorry!" },
-            new DialogueLine { speaker = "Bob", line = "Actually... can you collect 5 coins for me?" },
+        {
+            new DialogueLine { speaker = "Bob", line = "Hey there, traveler! You’re new around here, ain’t ya?" },
+            new DialogueLine { speaker = "Player", line = "Just arrived. Thought I’d check out the town." },
+            new DialogueLine { speaker = "Bob", line = "Well, welcome! Name’s Bob. Folks here call me that ‘cause… well, it’s my name." },
+            new DialogueLine { speaker = "Bob", line = "I usually help out the blacksmith, but things been slow lately." },
+            new DialogueLine { speaker = "Bob", line = "Say, could you help me out? I need 5 coins to buy some tools." },
+            new DialogueLine { speaker = "Bob", line = "I’d really appreciate it. What do you say?" },
             new DialogueLine { speaker = "", line = "[CHOICE]" }
-            };
+        };
             animator?.SetBool("isTalking", true);
            //animator?.SetBool("questCompleted", false);
         }
@@ -165,24 +187,9 @@ public class BobDialogue : MonoBehaviour
         btnAccept.onClick.RemoveAllListeners();
         btnDecline.onClick.RemoveAllListeners();
 
-        btnAccept.onClick.AddListener(() =>
-        {
-            // Only allow quest to start if it's not completed
-            if (!TaskTracker.Instance.IsBobQuestComplete)
-            {
-                TaskTracker.Instance.StartTracking("Collect 5 coins: ", 5);
-                choicePanel.SetActive(false);
-                awaitingChoice = false;
-                AdvanceDialogue();
-            }
-        });
+        btnAccept.onClick.AddListener(AcceptQuest);
+        btnDecline.onClick.AddListener(DeclineQuest);
 
-        btnDecline.onClick.AddListener(() =>
-        {
-            choicePanel.SetActive(false);
-            awaitingChoice = false;
-            EndDialogue();
-        });
     }
 
     IEnumerator TypeLine(string line)
@@ -220,6 +227,42 @@ public class BobDialogue : MonoBehaviour
         playerInput.lockInput = false;
         animator?.SetBool("isTalking", false);
     }
+    void AcceptQuest()
+    {
+        if (!TaskTracker.Instance.IsBobQuestComplete)
+        {
+            dialogueLines = new DialogueLine[]
+            {
+            new DialogueLine { speaker = "Player", line = "Alright. I’ll find those coins for you." },
+            new DialogueLine { speaker = "Bob", line = "Thank you kindly! You’ll be helpin’ more than you know." },
+            new DialogueLine { speaker = "Bob", line = "Come back once you’ve got ‘em." }
+            };
+
+            TaskTracker.Instance.StartTracking("Collect 5 coins: ", 5);
+            choicePanel.SetActive(false);
+            awaitingChoice = false;
+            if (coinManager != null)
+                coinManager.SetCoinsActive(true);
+            currentLine = 0; // Reset index
+            ShowLine();      // Start new dialogue
+        }
+    }
+
+
+    void DeclineQuest()
+    {
+        dialogueLines = new DialogueLine[]
+        {
+        new DialogueLine { speaker = "Player", line = "Sorry, I’ve got other things to do right now." },
+        new DialogueLine { speaker = "Bob", line = "Ah, no worries. Just thought I’d ask. Maybe another time." }
+        };
+
+        choicePanel.SetActive(false);
+        awaitingChoice = false;
+        currentLine = 0; // Reset index
+        ShowLine();      // Start new dialogue
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

@@ -1,44 +1,42 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Coin : MonoBehaviour
 {
-    private bool isPlayerInRange = false;
+    public float spinSpeed = 90f;
+    public float bounceSpeed = 2f;
+    public float bounceHeight = 0.25f;
+    private Vector3 startPos;
+
     public AudioSource audioSource;
 
-
-    private void Start()
+    void Start()
     {
-        
+        startPos = transform.position;
+
+        // Ensure collider is set as trigger
+        Collider col = GetComponent<Collider>();
+        col.isTrigger = true;
     }
 
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("E key pressed while in range.");
-            TaskTracker.Instance.Collect();
-            audioSource.Play();
-            // Delay destruction to let sound finish playing
-            Destroy(gameObject);
-        }
+        // Spin
+        transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime, Space.World);
+
+        // Bounce
+        float newY = Mathf.Sin(Time.time * bounceSpeed) * bounceHeight;
+        transform.position = new Vector3(startPos.x, startPos.y + newY, startPos.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInRange = true;
-            Debug.Log("Player entered range.");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerInRange = false;
-            Debug.Log("Player exited range.");
+            Debug.Log("Player collected the coin.");
+            TaskTracker.Instance.Collect();
+            audioSource.Play();
+            Destroy(gameObject);
         }
     }
 }
- 

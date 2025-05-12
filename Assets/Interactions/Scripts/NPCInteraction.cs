@@ -12,7 +12,7 @@ public class NPCInteraction : MonoBehaviour
     public float bounceSpeed = 2f;
     public float bounceHeight = 0.1f;
 
-    private bool isCoin = false; // Track if this object is a coin
+    private bool isCoin = false;
 
     private void Start()
     {
@@ -21,7 +21,6 @@ public class NPCInteraction : MonoBehaviour
 
         originalPosition = textPrompt.transform.localPosition;
 
-        // Check if this GameObject is tagged as a coin
         if (CompareTag("Coin"))
             isCoin = true;
     }
@@ -61,46 +60,41 @@ public class NPCInteraction : MonoBehaviour
 
     void Update()
     {
-        //if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-        //{
-        //    HidePrompt();
-
-        //    if (isCoin)
-        //    {
-        //        Debug.Log("Collected a coin!");
-        //        TaskTracker.Instance.Collect();
-        //        Destroy(gameObject);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Interacting with NPC...");
-        //        // Call your NPC interaction code here
-        //    }
-        //}
-
-        if (textPrompt != null)
+        // Optional: coin collection (if needed later)
+        /*
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            Vector3 directionToPlayer = Camera.main.transform.position - textPrompt.transform.position;
-            directionToPlayer.y = 0;
-            textPrompt.transform.forward = directionToPlayer.normalized;
+            HidePrompt();
 
-            Vector3 localScale = textPrompt.transform.localScale;
-            localScale.x = Mathf.Abs(localScale.x);
-            textPrompt.transform.localScale = localScale;
-
-            if (textPrompt.gameObject.activeSelf)
+            if (isCoin)
             {
-                float newY = originalPosition.y + Mathf.Sin(Time.time * bounceSpeed) * bounceHeight;
-                textPrompt.transform.localPosition = new Vector3(originalPosition.x, newY, originalPosition.z);
+                Debug.Log("Collected a coin!");
+                TaskTracker.Instance.Collect();
+                Destroy(gameObject);
             }
+            else
+            {
+                Debug.Log("Interacting with NPC...");
+            }
+        }
+        */
+
+        // Bounce animation
+        if (textPrompt != null && textPrompt.gameObject.activeSelf)
+        {
+            float newY = originalPosition.y + Mathf.Sin(Time.time * bounceSpeed) * bounceHeight;
+            textPrompt.transform.localPosition = new Vector3(originalPosition.x, newY, originalPosition.z);
         }
     }
 
     void LateUpdate()
     {
-        if (textPrompt != null)
+        if (textPrompt != null && textPrompt.gameObject.activeSelf)
         {
-            textPrompt.transform.rotation = Quaternion.LookRotation(textPrompt.transform.position - Camera.main.transform.position);
+            Vector3 cameraPosition = Camera.main.transform.position;
+            Vector3 direction = (textPrompt.transform.position - cameraPosition).normalized;
+            direction.y = 0f; // Locks vertical rotation to prevent flipping
+            textPrompt.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 
