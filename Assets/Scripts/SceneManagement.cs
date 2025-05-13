@@ -10,6 +10,9 @@ public class SceneManagement : MonoBehaviour
     public GameObject pauseScreen;
     public Button resumeButton;
     private bool isPaused = false;
+    public GameObject mainPanel;
+    public GameObject settingsPanel;
+    public GameObject creditsPanel;
 
     void Start()
     {
@@ -72,5 +75,24 @@ public class SceneManagement : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+        creditsPanel.SetActive(false);
+    }
+    public void OpenCredits()
+    {
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        creditsPanel.SetActive(true);
+    }
+    public void BackToMainMenu()
+    {
+        mainPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+        creditsPanel.SetActive(false);
     }
 }
