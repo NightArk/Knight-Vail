@@ -46,7 +46,7 @@ public class OldmanDialogue : MonoBehaviour
 
         // Initial quest dialogue
         initialDialogueLines = new DialogueLine[]
-         {
+        {
             new DialogueLine { speaker = "Old Man", line = "Ah... young one. May I trouble you for a moment?" },
             new DialogueLine { speaker = "Player", line = "Of course. What’s wrong?" },
             new DialogueLine { speaker = "Old Man", line = "I was on the road back here when I was ambushed." },
@@ -57,24 +57,25 @@ public class OldmanDialogue : MonoBehaviour
             new DialogueLine { speaker = "Old Man", line = "It’s all I have left of her." },
             new DialogueLine { speaker = "Player", line = "Where did you lose it?" },
             new DialogueLine { speaker = "Old Man", line = "Somewhere along the road that winds through the woods." },
-            new DialogueLine { speaker = "Old Man", line = "I was too afraid to turn back." },
+            new DialogueLine { speaker = "Old Man", line = "I remember stumbling near some rocks... but I was too afraid to turn back." },
             new DialogueLine { speaker = "Player", line = "I'll find your ring. You have my word." },
             new DialogueLine { speaker = "Old Man", line = "Thank you... truly. May fate be kinder to you than it was to me." }
-         };
+        };
+
 
 
         // Dialogue after quest is active but not complete
         questOngoingDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Old Man", line = "You're still searching? Bless you. I pray it's still out there... somewhere along that cursed road." },
-            new DialogueLine { speaker = "Old Man", line = "I keep thinking I hear her voice when the wind blows through the trees. Maybe that ring carries more of her than I knew." }
+            new DialogueLine { speaker = "Old Man", line = "You're still searching? Bless you. I think I dropped it somewhere along the road—maybe near some rocks." }
         };
+
 
 
         // Dialogue after quest is complete
         questCompleteDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Player", line = "I found your ring. It was lying in the dirt off the road." },
+            new DialogueLine { speaker = "Player", line = "I found your ring. It was lying in the dirt on the road above some rocks." },
             new DialogueLine { speaker = "Old Man", line = "...You found it? I... I can’t believe it." },
             new DialogueLine { speaker = "Old Man", line = "Thank you. You’ve returned a part of me I thought lost forever." }
         };
