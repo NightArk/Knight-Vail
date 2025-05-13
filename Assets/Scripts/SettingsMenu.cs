@@ -15,6 +15,7 @@ public class SettingsMenu : MonoBehaviour
     private MusicManager musicManager;
 
     public AudioMixer mixer;
+    public AudioMixer footMixer;
 
     private void Start()
     {
@@ -60,6 +61,7 @@ public class SettingsMenu : MonoBehaviour
     {
         float dB = Mathf.Log10(value) * 20f;
         mixer.SetFloat("SFXVolume", dB);
+        footMixer.SetFloat("SFX_DefaultVolume", dB);
         PlayerPrefs.SetFloat("SFXVolume", value);
     }
 

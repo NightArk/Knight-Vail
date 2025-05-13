@@ -13,6 +13,7 @@ public class SceneManagement : MonoBehaviour
     public GameObject mainPanel;
     public GameObject settingsPanel;
     public GameObject creditsPanel;
+    public GameObject scrollView;
 
     void Start()
     {
@@ -88,11 +89,28 @@ public class SceneManagement : MonoBehaviour
         mainPanel.SetActive(false);
         settingsPanel.SetActive(false);
         creditsPanel.SetActive(true);
+
+        CreditsAutoScroll autoScroll = scrollView.GetComponent<CreditsAutoScroll>();
+        if (autoScroll != null)
+        {
+            autoScroll.StartScrolling();
+        }
     }
     public void BackToMainMenu()
     {
         mainPanel.SetActive(true);
         settingsPanel.SetActive(false);
         creditsPanel.SetActive(false);
+    }
+    public void OpenPauseSettings()
+    {
+        pauseScreen.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+    public void BackToPauseMenu()
+    {
+        settingsPanel.SetActive(false);
+        pauseScreen.SetActive(true);
     }
 }
