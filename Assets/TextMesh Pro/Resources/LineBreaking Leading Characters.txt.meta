@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt.meta
 guid: d82c1b31c7e74239bff1220585707d2b
 timeCreated: 1425440388
+========
+guid: aca5a5cc8167a8f4aaa12e4c8a537c2e
+timeCreated: 1577214526
+>>>>>>>> Stashed changes:Assets/Interactions/Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/Scene/Devtoid-Gold,Silver,CopperCoins.unity.meta
 licenseType: Store
 TextScriptImporter:
   userData: 

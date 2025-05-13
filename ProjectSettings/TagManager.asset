@@ -30,6 +30,13 @@ TagManager:
   - CoverPoint
   - Interactable
   - AIAction
+  - OldMan
+  - Bob
+  - Coin
+  - Alessandra
+  - Cedric
+  - Tilda
+  - Muffin
   layers:
   - Default
   - TransparentFX
