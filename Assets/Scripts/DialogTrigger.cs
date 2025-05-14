@@ -73,8 +73,10 @@ public class DialogTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             popup.SetActive(false);
+            isTriggered = false;
         }
     }
+
 
     public void StartDialog()
     {
