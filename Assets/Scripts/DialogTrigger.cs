@@ -16,9 +16,9 @@ public class DialogTrigger : MonoBehaviour
     public GameObject popup;
     public Text nameText;
     public Text dialogText;
-  //public TextMeshProUGUI instructionText;
+  public TextMeshProUGUI instructionText;
     public float typingSpeed = 0.1f;
-    //public AudioClip typingSound;
+    public AudioClip typingSound;
     public string[] dialogs;
     public int[] characterIds;
     public UnityEvent onDialogStart;
@@ -35,8 +35,8 @@ public class DialogTrigger : MonoBehaviour
 
     private void Start()
     {
-        //audioSource = GetComponent<AudioSource>();
-      //audioSource.clip = typingSound;
+        audioSource = GetComponent<AudioSource>();
+      audioSource.clip = typingSound;
         dialogBox.SetActive(false);
         if (audioSource == null)
         {
@@ -128,7 +128,7 @@ public class DialogTrigger : MonoBehaviour
 
         isTyping = true;
         skipTyping = false;
-        //instructionText.text = "Press [space] to skip";
+        instructionText.text = "Press [space] to skip";
         if (audioSource != null)
         {
             audioSource.Play();
@@ -154,7 +154,7 @@ public class DialogTrigger : MonoBehaviour
         }
 
         isTyping = false;
-        //instructionText.text = "Press [space] to continue";
+        instructionText.text = "Press [space] to continue";
     }
 
     private void ProceedToNextLine()
