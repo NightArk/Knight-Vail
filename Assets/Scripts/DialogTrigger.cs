@@ -24,12 +24,13 @@ public class DialogTrigger : MonoBehaviour
     public UnityEvent onDialogEnd;
 
     public DialogData dialogData;
-    public AnimatorData animatorData; // ✅ Embedded Animator Data
+    public AnimatorData animatorData;
 
     private int currentDialogIndex = 0;
     private AudioSource audioSource;
     private bool isTyping = false;
     private bool isTriggered = false;
+    private bool skipTyping = false;
 
     private void Start()
     {
@@ -44,6 +45,17 @@ public class DialogTrigger : MonoBehaviour
         {
             StartDialog();
             isTriggered = false;
+        }
+        else if (dialogBox.activeSelf && Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isTyping)
+            {
+                skipTyping = true;
+            }
+            else
+            {
+                ProceedToNextLine();
+            }
         }
     }
 
@@ -84,15 +96,15 @@ public class DialogTrigger : MonoBehaviour
     IEnumerator DisplayNameAndTypeDialog()
     {
         if (animatorData.animators != null && animatorData.animationNames != null &&
-    currentDialogIndex < animatorData.animators.Length &&
-    currentDialogIndex < animatorData.animationNames.Length)
+        currentDialogIndex < animatorData.animators.Length &&
+        currentDialogIndex < animatorData.animationNames.Length)
         {
             Animator anim = animatorData.animators[currentDialogIndex];
             string animTrigger = animatorData.animationNames[currentDialogIndex];
 
             if (anim != null && !string.IsNullOrWhiteSpace(animTrigger))
             {
-                anim.ResetTrigger(animTrigger); // Optional: in case it was already active
+                anim.ResetTrigger(animTrigger);
                 anim.SetTrigger(animTrigger);
             }
         }
@@ -108,19 +120,28 @@ public class DialogTrigger : MonoBehaviour
         }
 
         isTyping = true;
+        skipTyping = false;
         audioSource.Play();
 
-        foreach (char letter in dialogs[currentDialogIndex].ToCharArray())
+        string sentence = dialogs[currentDialogIndex];
+        for (int i = 0; i < sentence.Length; i++)
         {
-            dialogText.text += letter;
+            if (skipTyping)
+            {
+                dialogText.text = sentence;
+                break;
+            }
+
+            dialogText.text += sentence[i];
             yield return new WaitForSeconds(typingSpeed);
         }
 
         audioSource.Stop();
         isTyping = false;
+    }
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-
+    private void ProceedToNextLine()
+    {
         dialogText.text = "";
         currentDialogIndex++;
 
