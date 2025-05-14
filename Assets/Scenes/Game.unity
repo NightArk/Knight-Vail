@@ -8363,6 +8363,7 @@ MonoBehaviour:
   popup: {fileID: 1020224082}
   nameText: {fileID: 608858440}
   dialogText: {fileID: 449753233}
+  instructionText: {fileID: 0}
   typingSpeed: 0.05
   typingSound: {fileID: 8300000, guid: 7863e488b11186c408780e25160f887f, type: 3}
   dialogs:
@@ -49161,7 +49162,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Talk to Maria
+  m_Text: Talk to the NPC
 --- !u!222 &1505591567
 CanvasRenderer:
   m_ObjectHideFlags: 0

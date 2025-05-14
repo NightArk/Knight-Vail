@@ -16,9 +16,9 @@ public class DialogTrigger : MonoBehaviour
     public GameObject popup;
     public Text nameText;
     public Text dialogText;
-    public TextMeshProUGUI instructionText;
+  //public TextMeshProUGUI instructionText;
     public float typingSpeed = 0.1f;
-    public AudioClip typingSound;
+    //public AudioClip typingSound;
     public string[] dialogs;
     public int[] characterIds;
     public UnityEvent onDialogStart;
@@ -28,16 +28,21 @@ public class DialogTrigger : MonoBehaviour
     public AnimatorData animatorData;
 
     private int currentDialogIndex = 0;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private bool isTyping = false;
     private bool isTriggered = false;
     private bool skipTyping = false;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = typingSound;
+        //audioSource = GetComponent<AudioSource>();
+      //audioSource.clip = typingSound;
         dialogBox.SetActive(false);
+        if (audioSource == null)
+        {
+            Debug.LogWarning("AudioSource not found on " + gameObject.name);
+        }
+
     }
 
     private void Update()
@@ -123,8 +128,12 @@ public class DialogTrigger : MonoBehaviour
 
         isTyping = true;
         skipTyping = false;
-        instructionText.text = "Press [space] to skip";
-        audioSource.Play();
+        //instructionText.text = "Press [space] to skip";
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
 
         string sentence = dialogs[currentDialogIndex];
         for (int i = 0; i < sentence.Length; i++)
@@ -139,9 +148,13 @@ public class DialogTrigger : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        audioSource.Stop();
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
         isTyping = false;
-        instructionText.text = "Press [space] to continue";
+        //instructionText.text = "Press [space] to continue";
     }
 
     private void ProceedToNextLine()
