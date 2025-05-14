@@ -62,7 +62,7 @@ public class MuffinDialogue : MonoBehaviour
         dialoguePanel.SetActive(true);
         currentLine = 0;
         ShowLine();
-        playerInput.lockInput = true;
+        StopPlayerMovement();
     }
 
     void AdvanceDialogue()
@@ -111,7 +111,7 @@ public class MuffinDialogue : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         isDialogueActive = false;
-        playerInput.lockInput = false;
+        ResumePlayerMovement();
 
         if (QuestManagerState.Instance.tildaDialogueState == QuestManagerState.TildaState.Second)
         {
@@ -133,5 +133,18 @@ public class MuffinDialogue : MonoBehaviour
         {
             isPlayerInRange = false;
         }
+    }
+    void StopPlayerMovement()
+    {
+        playerInput.enabled = false;  // Disable player input to stop movement
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
+        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+    }
+
+    // Resume player movement and input
+    void ResumePlayerMovement()
+    {
+        playerInput.enabled = true;  // Re-enable player input to allow movement
+        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }

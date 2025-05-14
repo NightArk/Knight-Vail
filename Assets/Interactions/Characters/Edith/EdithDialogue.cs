@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using Invector.vCharacterController;
 
-public class AlessandraDialogue : MonoBehaviour
+public class EdithDialogue : MonoBehaviour
 {
     [System.Serializable]
     public class DialogueLine
@@ -12,7 +12,13 @@ public class AlessandraDialogue : MonoBehaviour
         [TextArea] public string line;
     }
 
-    public DialogueLine[] dialogueLines;
+    public DialogueLine[] firstDialogue;
+
+    public DialogueLine finalRepeatLine = new DialogueLine
+    {
+        speaker = "Edith",
+        line = "It was so nice meeting you, Axel. Take care out there."
+    };
 
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
@@ -30,30 +36,33 @@ public class AlessandraDialogue : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
 
-    private Animator animator; // Animator reference
+    private bool hasHadFirstDialogue = false;
+    private Animator animator;
 
     void Start()
     {
-        dialogueLines = new DialogueLine[]
-        {
-            new DialogueLine { speaker = "Axel", line = "Hi, you must be Alessandra." },
-            new DialogueLine { speaker = "Alessandra", line = "That's right! You must be the new face everyone’s been talking about." },
-            new DialogueLine { speaker = "Axel", line = "Yeah, I just arrived in town. Looks like a great place." },
-            new DialogueLine { speaker = "Alessandra", line = "Welcome then! We don’t get too many newcomers around here, but it’s always nice to see fresh faces." },
-            new DialogueLine { speaker = "Axel", line = "Thanks! I'm still getting to know the area." },
-            new DialogueLine { speaker = "Alessandra", line = "You’re in the right place. People here are kind, and we stick together. You’ll feel at home in no time." },
-            new DialogueLine { speaker = "Axel", line = "That sounds great. I’m looking forward to exploring." },
-            new DialogueLine { speaker = "Alessandra", line = "If you need anything, don’t hesitate to ask. Oh, and watch out for Cedric." },
-            new DialogueLine { speaker = "Axel", line = "Cedric? Who’s that?" },
-            new DialogueLine { speaker = "Alessandra", line = "He’s a bit of a mystery, that one. Keeps to himself mostly. But don’t worry, he’s harmless—just a little... skeptical of newcomers." },
-            new DialogueLine { speaker = "Axel", line = "I’ll keep that in mind." },
-            new DialogueLine { speaker = "Alessandra", line = "Good. Anyway, don’t let me keep you. Enjoy your time here, and don’t be a stranger!" }
-        };
-
         dialoguePanel.SetActive(false);
         playerInput = player.GetComponent<vThirdPersonInput>();
+        animator = GetComponentInParent<Animator>();
 
-        animator = GetComponentInParent<Animator>(); // Auto-find animator on parent object
+        firstDialogue = new DialogueLine[]
+        {
+            new DialogueLine { speaker = "Player", line = "Hello there! My name’s Axel." },
+            new DialogueLine { speaker = "Edith", line = "Oh, hello, Axel! It’s always nice to meet someone new!" },
+            new DialogueLine { speaker = "Edith", line = "I’m Edith. You must be new around here?" },
+            new DialogueLine { speaker = "Player", line = "Yes, just passing through. This town is so peaceful." },
+            new DialogueLine { speaker = "Edith", line = "It used to be... So calm and full of life. But with the monsters around now, it's been harder to enjoy the peace." },
+            new DialogueLine { speaker = "Edith", line = "I really wish things could go back to how they were." },
+            new DialogueLine { speaker = "Player", line = "I think I can help bring things back to how they used to be." },
+            new DialogueLine { speaker = "Edith", line = "Oh, that’s so kind of you, Axel. I really hope we can return to those peaceful days." },
+            new DialogueLine { speaker = "Player", line = "I’ll do my best." },
+            new DialogueLine { speaker = "Edith", line = "Thank you, dear. Please be careful out there, and know that we’re all cheering you on." },
+            new DialogueLine { speaker = "Player", line = "I’ll keep that in mind." },
+            new DialogueLine { speaker = "Edith", line = "Take care, and if you ever need a warm tea or a chat, I’m here." },
+            new DialogueLine { speaker = "Player", line = "I’ll be sure to stop by." },
+            new DialogueLine { speaker = "Edith", line = "I’ll look forward to it. Stay safe, Axel." }
+        };
+
     }
 
     void Update()
@@ -77,24 +86,18 @@ public class AlessandraDialogue : MonoBehaviour
         isDialogueActive = true;
         dialoguePanel.SetActive(true);
         currentLine = 0;
-        ShowLine();
         StopPlayerMovement();
-
 
         if (animator != null)
             animator.SetBool("isTalking", true);
-    }
 
-    void AdvanceDialogue()
-    {
-        currentLine++;
-        if (currentLine < dialogueLines.Length)
+        if (!hasHadFirstDialogue)
         {
             ShowLine();
         }
         else
         {
-            EndDialogue();
+            ShowFinalLine();
         }
     }
 
@@ -103,16 +106,25 @@ public class AlessandraDialogue : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        var line = dialogueLines[currentLine];
-        speakerNameText.text = line.speaker;
-        typingCoroutine = StartCoroutine(TypeLine(line.line));
+        DialogueLine lineToShow = firstDialogue[currentLine];
+
+        speakerNameText.text = lineToShow.speaker;
+        typingCoroutine = StartCoroutine(TypeLine(lineToShow.line));
+    }
+
+    void ShowFinalLine()
+    {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        speakerNameText.text = finalRepeatLine.speaker;
+        typingCoroutine = StartCoroutine(TypeLine(finalRepeatLine.line));
     }
 
     IEnumerator TypeLine(string line)
     {
         isTyping = true;
         dialogueText.text = "";
-
         typingAudioSource.Play();
 
         foreach (char letter in line.ToCharArray())
@@ -129,16 +141,40 @@ public class AlessandraDialogue : MonoBehaviour
     {
         StopCoroutine(typingCoroutine);
         typingAudioSource.Stop();
-        dialogueText.text = dialogueLines[currentLine].line;
+
+        if (!hasHadFirstDialogue)
+            dialogueText.text = firstDialogue[currentLine].line;
+        else
+            dialogueText.text = finalRepeatLine.line;
+
         isTyping = false;
+    }
+
+    void AdvanceDialogue()
+    {
+        if (!hasHadFirstDialogue)
+        {
+            currentLine++;
+            if (currentLine < firstDialogue.Length)
+            {
+                ShowLine();
+            }
+            else
+            {
+                hasHadFirstDialogue = true;
+                EndDialogue();
+            }
+        }
+        else
+        {
+            EndDialogue();
+        }
     }
 
     void EndDialogue()
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        playerInput.lockInput = false;
-        // Enable player movement and input after dialogue ends
         ResumePlayerMovement();
 
         if (animator != null)

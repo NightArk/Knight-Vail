@@ -90,25 +90,25 @@ public class TildaDialogue : MonoBehaviour
             case QuestManagerState.TildaState.Initial:
                 dialogueLines = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Player", line = "Don’t look behind you." },
+            new DialogueLine { speaker = "Axel", line = "Don’t look behind you." },
             new DialogueLine { speaker = "Tilda", line = "What? Why? What’s wrong? Is it a bandit? A ghost?" },
-            new DialogueLine { speaker = "Player", line = "No... there's a sheep standing right there, staring into my soul." },
+            new DialogueLine { speaker = "Axel", line = "No... there's a sheep standing right there, staring into my soul." },
             new DialogueLine { speaker = "Tilda", line = "*laughs* Oh, that’s just Muffin, my darling sheep! She follows me everywhere." },
-            new DialogueLine { speaker = "Player", line = "She’s... oddly majestic. And mildly threatening." },
+            new DialogueLine { speaker = "Axel", line = "She’s... oddly majestic. And mildly threatening." },
             new DialogueLine { speaker = "Tilda", line = "She’s got a strong gaze, yes. I think she used to be a noblewoman in a past life. Or a tax collector." },
-            new DialogueLine { speaker = "Player", line = "Do all your animals have intense eye contact, or just this one?" },
+            new DialogueLine { speaker = "Axel", line = "Do all your animals have intense eye contact, or just this one?" },
             new DialogueLine { speaker = "Tilda", line = "Just Muffin. The chickens are too busy panicking about literally everything." },
-            new DialogueLine { speaker = "Player", line = "Can I pet her? Or is she... sacred?" },
+            new DialogueLine { speaker = "Axel", line = "Can I pet her? Or is she... sacred?" },
             new DialogueLine { speaker = "Tilda", line = "Of course! But speak softly. She once kicked a bard in the knee for whistling too loud." },
-            new DialogueLine { speaker = "Player", line = "Fair. I’ve wanted to do that to bards myself." },
+            new DialogueLine { speaker = "Axel", line = "Fair. I’ve wanted to do that to bards myself." },
             new DialogueLine { speaker = "Tilda", line = "She’s really just a fluffy ball of love. A slightly judgmental one, but aren’t we all?" },
-            new DialogueLine { speaker = "Player", line = "You two make quite the duo. Do you travel together much?" },
+            new DialogueLine { speaker = "Axel", line = "You two make quite the duo. Do you travel together much?" },
             new DialogueLine { speaker = "Tilda", line = "Everywhere. Market, temple, you name it. Muffin’s even been in the mayor’s office. She left a little ‘gift’ on the carpet." },
-            new DialogueLine { speaker = "Player", line = "Oh no..." },
+            new DialogueLine { speaker = "Axel", line = "Oh no..." },
             new DialogueLine { speaker = "Tilda", line = "Oh yes. I don’t think he’s ever fully recovered." },
-            new DialogueLine { speaker = "Player", line = "You're honestly the most interesting person I’ve met here so far." },
+            new DialogueLine { speaker = "Axel", line = "You're honestly the most interesting person I’ve met here so far." },
             new DialogueLine { speaker = "Tilda", line = "Stick around, stranger. You haven’t even heard the story of how I outran a pack of wolves with only a jar of honey and Muffin’s angry bleats." },
-            new DialogueLine { speaker = "Player", line = "I feel like this town just got a lot more entertaining." },
+            new DialogueLine { speaker = "Axel", line = "I feel like this town just got a lot more entertaining." },
             new DialogueLine { speaker = "Tilda", line = "And it’s better with friends. Come visit any time. Muffin always remembers kind faces... and snacks." }
         };
                 
@@ -124,9 +124,9 @@ public class TildaDialogue : MonoBehaviour
             case QuestManagerState.TildaState.VisitedMuffin:
                 dialogueLines = new DialogueLine[]
                 {
-                new DialogueLine { speaker = "Player", line = "I pet Muffin. She did not consume me." },
+                new DialogueLine { speaker = "Axel", line = "I pet Muffin. She did not consume me." },
                 new DialogueLine { speaker = "Tilda", line = "A rare honor! Muffin approves." },
-                new DialogueLine { speaker = "Player", line = "She might be the boss of this village." },
+                new DialogueLine { speaker = "Axel", line = "She might be the boss of this village." },
                 new DialogueLine { speaker = "Tilda", line = "Don’t let her hear that. She’ll demand a crown." }
                 };
                 QuestManagerState.Instance.tildaDialogueState = QuestManagerState.TildaState.Final;
@@ -149,7 +149,7 @@ public class TildaDialogue : MonoBehaviour
         currentLine = 0;
         UpdateDialogueByState();
         ShowLine();
-        playerInput.lockInput = true;
+        StopPlayerMovement();
 
         if (animator != null)
             animator.SetBool("isTalking", true);
@@ -207,7 +207,7 @@ public class TildaDialogue : MonoBehaviour
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        playerInput.lockInput = false;
+        ResumePlayerMovement();
         if (QuestManagerState.Instance.tildaDialogueState == QuestManagerState.TildaState.Initial)
         {
             QuestManagerState.Instance.tildaDialogueState = QuestManagerState.TildaState.Second;
@@ -226,5 +226,18 @@ public class TildaDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isPlayerInRange = false;
+    }
+    void StopPlayerMovement()
+    {
+        playerInput.enabled = false;  // Disable player input to stop movement
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
+        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+    }
+
+    // Resume player movement and input
+    void ResumePlayerMovement()
+    {
+        playerInput.enabled = true;  // Re-enable player input to allow movement
+        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }

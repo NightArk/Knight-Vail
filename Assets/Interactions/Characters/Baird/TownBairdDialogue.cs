@@ -36,6 +36,10 @@ public class TownBairdDialogue : MonoBehaviour
     public AudioSource typingAudioSource;
     public AudioSource music;
 
+    public AudioSource btnY;
+    public AudioSource btnN;
+
+
     private int currentLine = 0;
     private int currentQuestion = 0;
 
@@ -59,13 +63,13 @@ public class TownBairdDialogue : MonoBehaviour
 
     private DialogueLine[] declineLines = new DialogueLine[]
     {
-        new DialogueLine { speaker = "Player", line = "Not right now, thanks." },
+        new DialogueLine { speaker = "Axel", line = "Not right now, thanks." },
         new DialogueLine { speaker = "Town Baird", line = "Ah, no worries. Mayhap another day, then." }
     };
 
     private DialogueLine[] acceptIntroLines = new DialogueLine[]
     {
-        new DialogueLine { speaker = "Player", line = "Sure! I’d love a poem." },
+        new DialogueLine { speaker = "Axel", line = "Sure! I’d love a poem." },
         new DialogueLine { speaker = "Town Baird", line = "Splendid! First, a few questions, so I may know thee better." }
     };
 
@@ -134,7 +138,7 @@ public class TownBairdDialogue : MonoBehaviour
 
         animator.SetTrigger("isBowing");
         animator.SetBool("isTalking", true); // Start talking animation
-        playerInput.lockInput = true;
+        StopPlayerMovement();
         ShowLines(introLines);
     }
 
@@ -243,6 +247,7 @@ public class TownBairdDialogue : MonoBehaviour
 
     void AcceptPoem()
     {
+        btnY.Play();
         awaitingChoice = false;
         choicePanel.SetActive(false);
         ShowLines(acceptIntroLines);
@@ -250,6 +255,7 @@ public class TownBairdDialogue : MonoBehaviour
 
     void DeclinePoem()
     {
+        btnN.Play();
         awaitingChoice = false;
         choicePanel.SetActive(false);
         ShowLines(declineLines);
@@ -286,7 +292,7 @@ public class TownBairdDialogue : MonoBehaviour
         DialogueLine[] qLines = new DialogueLine[]
         {
         new DialogueLine { speaker = "Town Baird", line = questionPrompts[currentQuestion] },
-        new DialogueLine { speaker = "", line = "[CHOICE]" }
+        new DialogueLine { speaker = "Axel", line = "[CHOICE]" }
         };
 
         ShowLines(qLines);
@@ -294,6 +300,10 @@ public class TownBairdDialogue : MonoBehaviour
 
     void ChooseAnswer(bool choseFirstOption)
     {
+        if (choseFirstOption)
+            btnY.Play();
+        else
+            btnN.Play();
         awaitingChoice = false;
         choicePanel.SetActive(false);
 
@@ -481,7 +491,7 @@ public class TownBairdDialogue : MonoBehaviour
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
         choicePanel.SetActive(false);
-        playerInput.lockInput = false;
+        ResumePlayerMovement();
         music.Stop();
         animator.SetBool("isTalking", false);  // Stop talking animation
         animator.SetBool("isYelling", false);  // Stop yelling animation
@@ -497,5 +507,18 @@ public class TownBairdDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isPlayerInRange = false;
+    }
+    void StopPlayerMovement()
+    {
+        playerInput.enabled = false;  // Disable player input to stop movement
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
+        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+    }
+
+    // Resume player movement and input
+    void ResumePlayerMovement()
+    {
+        playerInput.enabled = true;  // Re-enable player input to allow movement
+        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }

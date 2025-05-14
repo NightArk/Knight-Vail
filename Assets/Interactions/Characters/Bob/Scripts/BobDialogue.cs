@@ -103,7 +103,7 @@ public class BobDialogue : MonoBehaviour
             dialogueLines = new DialogueLine[]
             {
                 new DialogueLine { speaker = "Bob", line = "Well I'll be! You actually found all five coins!" },
-                new DialogueLine { speaker = "Player", line = "Told you I’d come through." },
+                new DialogueLine { speaker = "Axel", line = "Told you I’d come through." },
                 new DialogueLine { speaker = "Bob", line = "I can’t thank you enough. That really means a lot." }
             };
 
@@ -129,19 +129,19 @@ public class BobDialogue : MonoBehaviour
             dialogueLines = new DialogueLine[]
         {
             new DialogueLine { speaker = "Bob", line = "Hey there, traveler! You’re new around here, ain’t ya?" },
-            new DialogueLine { speaker = "Player", line = "Just arrived. Thought I’d check out the town." },
+            new DialogueLine { speaker = "Axel", line = "Just arrived. Thought I’d check out the town." },
             new DialogueLine { speaker = "Bob", line = "Well, welcome! Name’s Bob. Folks here call me that ‘cause… well, it’s my name." },
             new DialogueLine { speaker = "Bob", line = "I usually help out the blacksmith, but things been slow lately." },
             new DialogueLine { speaker = "Bob", line = "Say, could you help me out? I need 5 coins to buy some tools." },
             new DialogueLine { speaker = "Bob", line = "I’d really appreciate it. What do you say?" },
-            new DialogueLine { speaker = "", line = "[CHOICE]" }
+            new DialogueLine { speaker = "Axel", line = "[CHOICE]" }
         };
             animator?.SetBool("isTalking", true);
            //animator?.SetBool("questCompleted", false);
         }
 
         ShowLine();
-        playerInput.lockInput = true;
+        StopPlayerMovement();
     }
 
 
@@ -244,7 +244,7 @@ public class BobDialogue : MonoBehaviour
         dialoguePanel.SetActive(false);
         isDialogueActive = false;
         currentLine = 0;
-        playerInput.lockInput = false;
+        ResumePlayerMovement();
         animator?.SetBool("isTalking", false);
     }
     void AcceptQuest()
@@ -294,5 +294,18 @@ public class BobDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isPlayerInRange = false;
+    }
+    void StopPlayerMovement()
+    {
+        playerInput.enabled = false;  // Disable player input to stop movement
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
+        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+    }
+
+    // Resume player movement and input
+    void ResumePlayerMovement()
+    {
+        playerInput.enabled = true;  // Re-enable player input to allow movement
+        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }

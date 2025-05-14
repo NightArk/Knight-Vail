@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using Invector.vCharacterController;
 
-public class AlessandraDialogue : MonoBehaviour
+public class Ran6Dialogue : MonoBehaviour
 {
     [System.Serializable]
     public class DialogueLine
@@ -30,30 +30,18 @@ public class AlessandraDialogue : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
 
-    private Animator animator; // Animator reference
+    private Animator animator;
 
     void Start()
     {
         dialogueLines = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Axel", line = "Hi, you must be Alessandra." },
-            new DialogueLine { speaker = "Alessandra", line = "That's right! You must be the new face everyone’s been talking about." },
-            new DialogueLine { speaker = "Axel", line = "Yeah, I just arrived in town. Looks like a great place." },
-            new DialogueLine { speaker = "Alessandra", line = "Welcome then! We don’t get too many newcomers around here, but it’s always nice to see fresh faces." },
-            new DialogueLine { speaker = "Axel", line = "Thanks! I'm still getting to know the area." },
-            new DialogueLine { speaker = "Alessandra", line = "You’re in the right place. People here are kind, and we stick together. You’ll feel at home in no time." },
-            new DialogueLine { speaker = "Axel", line = "That sounds great. I’m looking forward to exploring." },
-            new DialogueLine { speaker = "Alessandra", line = "If you need anything, don’t hesitate to ask. Oh, and watch out for Cedric." },
-            new DialogueLine { speaker = "Axel", line = "Cedric? Who’s that?" },
-            new DialogueLine { speaker = "Alessandra", line = "He’s a bit of a mystery, that one. Keeps to himself mostly. But don’t worry, he’s harmless—just a little... skeptical of newcomers." },
-            new DialogueLine { speaker = "Axel", line = "I’ll keep that in mind." },
-            new DialogueLine { speaker = "Alessandra", line = "Good. Anyway, don’t let me keep you. Enjoy your time here, and don’t be a stranger!" }
+            new DialogueLine { speaker = "Man", line = "Lovely weather today, isn't it?\"" }
         };
 
         dialoguePanel.SetActive(false);
         playerInput = player.GetComponent<vThirdPersonInput>();
-
-        animator = GetComponentInParent<Animator>(); // Auto-find animator on parent object
+        animator = GetComponentInParent<Animator>();
     }
 
     void Update()
@@ -79,7 +67,6 @@ public class AlessandraDialogue : MonoBehaviour
         currentLine = 0;
         ShowLine();
         StopPlayerMovement();
-
 
         if (animator != null)
             animator.SetBool("isTalking", true);
@@ -137,8 +124,6 @@ public class AlessandraDialogue : MonoBehaviour
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        playerInput.lockInput = false;
-        // Enable player movement and input after dialogue ends
         ResumePlayerMovement();
 
         if (animator != null)
@@ -156,7 +141,6 @@ public class AlessandraDialogue : MonoBehaviour
         if (other.CompareTag("Player"))
             isPlayerInRange = false;
     }
-
     void StopPlayerMovement()
     {
         playerInput.enabled = false;  // Disable player input to stop movement
@@ -171,3 +155,4 @@ public class AlessandraDialogue : MonoBehaviour
         player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }
+

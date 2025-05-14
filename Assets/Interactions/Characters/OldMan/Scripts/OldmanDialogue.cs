@@ -46,38 +46,41 @@ public class OldmanDialogue : MonoBehaviour
 
         // Initial quest dialogue
         initialDialogueLines = new DialogueLine[]
-         {
+        {
             new DialogueLine { speaker = "Old Man", line = "Ah... young one. May I trouble you for a moment?" },
-            new DialogueLine { speaker = "Player", line = "Of course. What’s wrong?" },
+            new DialogueLine { speaker = "Axel", line = "Of course. What’s wrong?" },
             new DialogueLine { speaker = "Old Man", line = "I was on the road back here when I was ambushed." },
             new DialogueLine { speaker = "Old Man", line = "Creatures—dark, snarling things—chased me through the woods. I barely escaped." },
-            new DialogueLine { speaker = "Old Man", line = "In my panic... I dropped something. My ring." },
-            new DialogueLine { speaker = "Player", line = "What kind of ring?" },
+            new DialogueLine { speaker = "Old Man", line = "As I ran, I stumbled near a cluster of rocks along the roadside." },
+            new DialogueLine { speaker = "Old Man", line = "In the fall... I must've dropped something. My ring." },
+            new DialogueLine { speaker = "Axel", line = "What kind of ring?" },
             new DialogueLine { speaker = "Old Man", line = "A silver band, worn with time. It belonged to my wife. She's been gone many years now." },
             new DialogueLine { speaker = "Old Man", line = "It’s all I have left of her." },
-            new DialogueLine { speaker = "Player", line = "Where did you lose it?" },
-            new DialogueLine { speaker = "Old Man", line = "Somewhere along the road that winds through the woods." },
+            new DialogueLine { speaker = "Axel", line = "Where exactly did you lose it?" },
+            new DialogueLine { speaker = "Old Man", line = "Somewhere along the road that winds through the woods—near those rocks I mentioned." },
             new DialogueLine { speaker = "Old Man", line = "I was too afraid to turn back." },
-            new DialogueLine { speaker = "Player", line = "I'll find your ring. You have my word." },
+            new DialogueLine { speaker = "Axel", line = "I'll find your ring. You have my word." },
             new DialogueLine { speaker = "Old Man", line = "Thank you... truly. May fate be kinder to you than it was to me." }
-         };
+        };
+
 
 
         // Dialogue after quest is active but not complete
         questOngoingDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Old Man", line = "You're still searching? Bless you. I pray it's still out there... somewhere along that cursed road." },
-            new DialogueLine { speaker = "Old Man", line = "I keep thinking I hear her voice when the wind blows through the trees. Maybe that ring carries more of her than I knew." }
+            new DialogueLine { speaker = "Old Man", line = "Still searching? Bless you. I tripped near some rocks off the road—I think that’s where it slipped away." }
         };
+
 
 
         // Dialogue after quest is complete
         questCompleteDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Player", line = "I found your ring. It was lying in the dirt off the road." },
+            new DialogueLine { speaker = "Axel", line = "I found your ring. It was lying on top of some rocks off the road." },
             new DialogueLine { speaker = "Old Man", line = "...You found it? I... I can’t believe it." },
             new DialogueLine { speaker = "Old Man", line = "Thank you. You’ve returned a part of me I thought lost forever." }
         };
+
 
         questComplete1Dialogue = new DialogueLine[]
         {
@@ -142,7 +145,7 @@ public class OldmanDialogue : MonoBehaviour
 
 
         ShowLine();
-        playerInput.lockInput = true;
+        StopPlayerMovement();
     }
 
 
@@ -207,7 +210,7 @@ public class OldmanDialogue : MonoBehaviour
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        playerInput.lockInput=false;
+        ResumePlayerMovement();
 
 
         // Only start the quest if it hasn't already been finished
@@ -229,5 +232,18 @@ public class OldmanDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isPlayerInRange = false;
+    }
+    void StopPlayerMovement()
+    {
+        playerInput.enabled = false;  // Disable player input to stop movement
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
+        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+    }
+
+    // Resume player movement and input
+    void ResumePlayerMovement()
+    {
+        playerInput.enabled = true;  // Re-enable player input to allow movement
+        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
     }
 }
