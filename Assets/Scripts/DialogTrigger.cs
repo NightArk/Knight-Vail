@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+using TMPro;
 public class DialogTrigger : MonoBehaviour
 {
     [System.Serializable]
@@ -16,6 +16,7 @@ public class DialogTrigger : MonoBehaviour
     public GameObject popup;
     public Text nameText;
     public Text dialogText;
+    public TextMeshProUGUI instructionText;
     public float typingSpeed = 0.1f;
     public AudioClip typingSound;
     public string[] dialogs;
@@ -77,7 +78,6 @@ public class DialogTrigger : MonoBehaviour
         }
     }
 
-
     public void StartDialog()
     {
         popup.SetActive(false);
@@ -123,6 +123,7 @@ public class DialogTrigger : MonoBehaviour
 
         isTyping = true;
         skipTyping = false;
+        instructionText.text = "Press [space] to skip";
         audioSource.Play();
 
         string sentence = dialogs[currentDialogIndex];
@@ -140,6 +141,7 @@ public class DialogTrigger : MonoBehaviour
 
         audioSource.Stop();
         isTyping = false;
+        instructionText.text = "Press [space] to continue";
     }
 
     private void ProceedToNextLine()
