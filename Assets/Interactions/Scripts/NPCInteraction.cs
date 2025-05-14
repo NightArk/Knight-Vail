@@ -61,23 +61,15 @@ public class NPCInteraction : MonoBehaviour
     void Update()
     {
         // Optional: coin collection (if needed later)
-        /*
+        
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
             HidePrompt();
 
-            if (isCoin)
-            {
-                Debug.Log("Collected a coin!");
-                TaskTracker.Instance.Collect();
-                Destroy(gameObject);
-            }
-            else
-            {
                 Debug.Log("Interacting with NPC...");
-            }
+            
         }
-        */
+        
 
         // Bounce animation
         if (textPrompt != null && textPrompt.gameObject.activeSelf)

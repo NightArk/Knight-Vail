@@ -39,6 +39,8 @@ public class BobDialogue : MonoBehaviour
     public AudioSource declineSFX;
     public CoinManager coinManager;
 
+    public CanvasGroup choicePanelCanvasGroup;
+
 
     void Start()
     {
@@ -183,14 +185,32 @@ public class BobDialogue : MonoBehaviour
         yield return new WaitUntil(() => isTyping == false);
 
         choicePanel.SetActive(true);
+        choicePanelCanvasGroup.alpha = 0f;
+        choicePanelCanvasGroup.interactable = false;
+        choicePanelCanvasGroup.blocksRaycasts = false;
+
+        // Fade in
+        float duration = 0.3f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            choicePanelCanvasGroup.alpha = Mathf.Clamp01(elapsed / duration);
+            yield return null;
+        }
+
+        choicePanelCanvasGroup.interactable = true;
+        choicePanelCanvasGroup.blocksRaycasts = true;
+
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(btnAccept.gameObject);
         btnAccept.onClick.RemoveAllListeners();
         btnDecline.onClick.RemoveAllListeners();
 
         btnAccept.onClick.AddListener(AcceptQuest);
         btnDecline.onClick.AddListener(DeclineQuest);
-
     }
+
 
     IEnumerator TypeLine(string line)
     {
