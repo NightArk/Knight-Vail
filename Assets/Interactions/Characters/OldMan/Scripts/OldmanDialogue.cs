@@ -51,6 +51,8 @@ public class OldmanDialogue : MonoBehaviour
             new DialogueLine { speaker = "Axel", line = "Of course. What’s wrong?" },
             new DialogueLine { speaker = "Old Man", line = "I was on the road back here when I was ambushed." },
             new DialogueLine { speaker = "Old Man", line = "Creatures—dark, snarling things—chased me through the woods. I barely escaped." },
+            new DialogueLine { speaker = "Old Man", line = "And there were signs... of elves, twisted by something foul. Their eyes glowed with hate." },
+            new DialogueLine { speaker = "Old Man", line = "Stay sharp if you go into those woods. Monsters aren't the only things lurking there." },
             new DialogueLine { speaker = "Old Man", line = "As I ran, I stumbled near a cluster of rocks along the roadside." },
             new DialogueLine { speaker = "Old Man", line = "In the fall... I must've dropped something. My ring." },
             new DialogueLine { speaker = "Axel", line = "What kind of ring?" },
@@ -62,6 +64,7 @@ public class OldmanDialogue : MonoBehaviour
             new DialogueLine { speaker = "Axel", line = "I'll find your ring. You have my word." },
             new DialogueLine { speaker = "Old Man", line = "Thank you... truly. May fate be kinder to you than it was to me." }
         };
+
 
 
 

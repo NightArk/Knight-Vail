@@ -12,7 +12,13 @@ public class AlessandraDialogue : MonoBehaviour
         [TextArea] public string line;
     }
 
-    public DialogueLine[] dialogueLines;
+    public DialogueLine[] firstDialogue;
+
+    public DialogueLine finalRepeatLine = new DialogueLine
+    {
+        speaker = "Alessandra",
+        line = "Don’t be a stranger, Axel. The town’s always better with company like yours."
+    };
 
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
@@ -28,17 +34,22 @@ public class AlessandraDialogue : MonoBehaviour
     private bool isPlayerInRange = false;
     private bool isDialogueActive = false;
     private bool isTyping = false;
+    private bool hasHadFirstDialogue = false;
     private Coroutine typingCoroutine;
 
-    private Animator animator; // Animator reference
+    private Animator animator;
 
     void Start()
     {
-        dialogueLines = new DialogueLine[]
+        dialoguePanel.SetActive(false);
+        playerInput = player.GetComponent<vThirdPersonInput>();
+        animator = GetComponentInParent<Animator>();
+
+        firstDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Axel", line = "Hi, you must be Alessandra." },
-            new DialogueLine { speaker = "Alessandra", line = "That's right! You must be the new face everyone’s been talking about." },
-            new DialogueLine { speaker = "Axel", line = "Yeah, I just arrived in town. Looks like a great place." },
+            new DialogueLine { speaker = "Axel", line = "Hi, I’m new in town. My name’s Axel." },
+            new DialogueLine { speaker = "Alessandra", line = "Nice to meet you, Axel. I’m Alessandra." },
+            new DialogueLine { speaker = "Axel", line = "It’s a pleasure, Alessandra. This place looks great so far." },
             new DialogueLine { speaker = "Alessandra", line = "Welcome then! We don’t get too many newcomers around here, but it’s always nice to see fresh faces." },
             new DialogueLine { speaker = "Axel", line = "Thanks! I'm still getting to know the area." },
             new DialogueLine { speaker = "Alessandra", line = "You’re in the right place. People here are kind, and we stick together. You’ll feel at home in no time." },
@@ -50,10 +61,6 @@ public class AlessandraDialogue : MonoBehaviour
             new DialogueLine { speaker = "Alessandra", line = "Good. Anyway, don’t let me keep you. Enjoy your time here, and don’t be a stranger!" }
         };
 
-        dialoguePanel.SetActive(false);
-        playerInput = player.GetComponent<vThirdPersonInput>();
-
-        animator = GetComponentInParent<Animator>(); // Auto-find animator on parent object
     }
 
     void Update()
@@ -77,25 +84,15 @@ public class AlessandraDialogue : MonoBehaviour
         isDialogueActive = true;
         dialoguePanel.SetActive(true);
         currentLine = 0;
-        ShowLine();
         StopPlayerMovement();
-
 
         if (animator != null)
             animator.SetBool("isTalking", true);
-    }
 
-    void AdvanceDialogue()
-    {
-        currentLine++;
-        if (currentLine < dialogueLines.Length)
-        {
+        if (!hasHadFirstDialogue)
             ShowLine();
-        }
         else
-        {
-            EndDialogue();
-        }
+            ShowFinalLine();
     }
 
     void ShowLine()
@@ -103,16 +100,24 @@ public class AlessandraDialogue : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        var line = dialogueLines[currentLine];
-        speakerNameText.text = line.speaker;
-        typingCoroutine = StartCoroutine(TypeLine(line.line));
+        DialogueLine lineToShow = firstDialogue[currentLine];
+        speakerNameText.text = lineToShow.speaker;
+        typingCoroutine = StartCoroutine(TypeLine(lineToShow.line));
+    }
+
+    void ShowFinalLine()
+    {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        speakerNameText.text = finalRepeatLine.speaker;
+        typingCoroutine = StartCoroutine(TypeLine(finalRepeatLine.line));
     }
 
     IEnumerator TypeLine(string line)
     {
         isTyping = true;
         dialogueText.text = "";
-
         typingAudioSource.Play();
 
         foreach (char letter in line.ToCharArray())
@@ -129,16 +134,39 @@ public class AlessandraDialogue : MonoBehaviour
     {
         StopCoroutine(typingCoroutine);
         typingAudioSource.Stop();
-        dialogueText.text = dialogueLines[currentLine].line;
+
+        dialogueText.text = !hasHadFirstDialogue
+            ? firstDialogue[currentLine].line
+            : finalRepeatLine.line;
+
         isTyping = false;
+    }
+
+    void AdvanceDialogue()
+    {
+        if (!hasHadFirstDialogue)
+        {
+            currentLine++;
+            if (currentLine < firstDialogue.Length)
+            {
+                ShowLine();
+            }
+            else
+            {
+                hasHadFirstDialogue = true;
+                EndDialogue();
+            }
+        }
+        else
+        {
+            EndDialogue();
+        }
     }
 
     void EndDialogue()
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        playerInput.lockInput = false;
-        // Enable player movement and input after dialogue ends
         ResumePlayerMovement();
 
         if (animator != null)
@@ -159,15 +187,14 @@ public class AlessandraDialogue : MonoBehaviour
 
     void StopPlayerMovement()
     {
-        playerInput.enabled = false;  // Disable player input to stop movement
-        player.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop any existing momentum
-        player.GetComponent<Rigidbody>().isKinematic = true;  // Disable physics to prevent movement
+        playerInput.enabled = false;
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        player.GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    // Resume player movement and input
     void ResumePlayerMovement()
     {
-        playerInput.enabled = true;  // Re-enable player input to allow movement
-        player.GetComponent<Rigidbody>().isKinematic = false;  // Enable physics again
+        playerInput.enabled = true;
+        player.GetComponent<Rigidbody>().isKinematic = false;
     }
 }

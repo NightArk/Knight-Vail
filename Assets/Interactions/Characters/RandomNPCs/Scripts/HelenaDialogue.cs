@@ -49,7 +49,8 @@ public class HelenaDialogue : MonoBehaviour
         {
             new DialogueLine { speaker = "Helena", line = "Well, hello there! It’s not every day we get new faces in town. I’m Helena." },
             new DialogueLine { speaker = "Axel", line = "Nice to meet you, Helena." },
-            new DialogueLine { speaker = "Helena", line = "This town... oh, it’s full of interesting folk. You’ll find drunks who tell tall tales down at the tavern, and folks who fancy themselves wizards — though I’m not sure they’ve got any magic to show for it!" },
+            new DialogueLine { speaker = "Helena", line = "This town... oh, it’s full of interesting folk." },
+            new DialogueLine { speaker = "Helena", line = "You’ll find drunks who tell tall tales down at the tavern, and folks who fancy themselves wizards — though I’m not sure they’ve got any magic to show for it!" },
             new DialogueLine { speaker = "Axel", line = "Sounds like quite the place." },
             new DialogueLine { speaker = "Helena", line = "It is! Some might call it odd, but that’s what makes it special. Everyone’s got their little quirks, and somehow it all fits together like a patchwork quilt." },
             new DialogueLine { speaker = "Axel", line = "I like that. It sounds charming." },

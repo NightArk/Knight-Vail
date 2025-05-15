@@ -36,8 +36,6 @@ public class TownsmanDialogue1 : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
 
-    public static bool DialogueIsActiveGlobal = false;
-
     private bool hasHadFirstDialogue = false;
     private Animator animator;
 
@@ -47,8 +45,7 @@ public class TownsmanDialogue1 : MonoBehaviour
         playerInput = player.GetComponent<vThirdPersonInput>();
         animator = GetComponentInParent<Animator>();
 
-
-        DialogueLine[] introDialogue = new DialogueLine[]
+        firstDialogue = new DialogueLine[]
         {
             new DialogueLine { speaker = "Townsman", line = "Well now... are you the one everyone's been whispering about in town lately?" },
             new DialogueLine { speaker = "Axel", line = "Yes, my name is Axel. I've come to help—to save whoever I can." },
@@ -57,7 +54,6 @@ public class TownsmanDialogue1 : MonoBehaviour
             new DialogueLine { speaker = "Townsman", line = "Watch your step out there, Axel. This town’s more teeth than it lets on." },
             new DialogueLine { speaker = "Townsman", line = "Good luck. And don’t let the quiet fool you—it’s watching." }
         };
-
     }
 
     void Update()
@@ -78,10 +74,6 @@ public class TownsmanDialogue1 : MonoBehaviour
 
     void StartDialogue()
     {
-        if (DialogueIsActiveGlobal)
-            return; // Prevent starting if another dialogue is active
-
-        DialogueIsActiveGlobal = true;
         isDialogueActive = true;
         dialoguePanel.SetActive(true);
         currentLine = 0;
@@ -99,7 +91,6 @@ public class TownsmanDialogue1 : MonoBehaviour
             ShowFinalLine();
         }
     }
-
 
     void ShowLine()
     {
@@ -173,7 +164,6 @@ public class TownsmanDialogue1 : MonoBehaviour
 
     void EndDialogue()
     {
-        DialogueIsActiveGlobal = false;
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
         ResumePlayerMovement();
@@ -181,7 +171,6 @@ public class TownsmanDialogue1 : MonoBehaviour
         if (animator != null)
             animator.SetBool("isTalking", false);
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
