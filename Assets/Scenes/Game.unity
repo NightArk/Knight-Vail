@@ -1292,12 +1292,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 1
   _isDead: 0
   _currentHealth: 0
   isImmortal: 0
   fillHealthOnStart: 1
-  maxHealth: 35
+  maxHealth: 25
   healthRecovery: 10
   healthRecoveryDelay: 5
   currentHealthRecoveryDelay: 0
@@ -1375,8 +1375,8 @@ MonoBehaviour:
   headDetect: 0.95
   patrolSpeed: 0.5
   wanderSpeed: 0.5
-  chaseSpeed: 1
-  strafeSpeed: 1
+  chaseSpeed: 1.5
+  strafeSpeed: 1.5
   strafeSideways: 1
   strafeBackward: 1
   strafeDistance: 3
@@ -5154,7 +5154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &98674779
 Transform:
   m_ObjectHideFlags: 0
@@ -20512,7 +20512,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &332620051
 Transform:
   m_ObjectHideFlags: 0
@@ -27523,7 +27523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &411164523
 Transform:
   m_ObjectHideFlags: 0
@@ -29325,7 +29325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &419274898
 Transform:
   m_ObjectHideFlags: 0
@@ -39019,7 +39019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &625628055
 Transform:
   m_ObjectHideFlags: 0
@@ -54220,12 +54220,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 0
   _isDead: 0
   _currentHealth: 0
   isImmortal: 0
   fillHealthOnStart: 1
-  maxHealth: 35
+  maxHealth: 25
   healthRecovery: 10
   healthRecoveryDelay: 5
   currentHealthRecoveryDelay: 0
@@ -54792,7 +54792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &935748486
 Transform:
   m_ObjectHideFlags: 0
@@ -56546,7 +56546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &998703675
 Transform:
   m_ObjectHideFlags: 0
@@ -63851,7 +63851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1184798988
 Transform:
   m_ObjectHideFlags: 0
@@ -73741,7 +73741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1437674137
 Transform:
   m_ObjectHideFlags: 0
@@ -98733,7 +98733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1779756905
 Transform:
   m_ObjectHideFlags: 0
@@ -101598,7 +101598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1833242233
 Transform:
   m_ObjectHideFlags: 0
@@ -110309,7 +110309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988378365}
   m_LocalRotation: {x: -0, y: -0.8191521, z: -0, w: 0.57357645}
-  m_LocalPosition: {x: 245.02, y: 28.14, z: 155.57}
+  m_LocalPosition: {x: 247.24, y: 28.14, z: 157.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -110490,12 +110490,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 0
   _isDead: 0
   _currentHealth: 0
   isImmortal: 0
   fillHealthOnStart: 1
-  maxHealth: 35
+  maxHealth: 25
   healthRecovery: 10
   healthRecoveryDelay: 5
   currentHealthRecoveryDelay: 0
@@ -117992,7 +117992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2020161167
 Transform:
   m_ObjectHideFlags: 0
@@ -121858,7 +121858,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129760953}
   m_LocalRotation: {x: -0, y: -0.8191521, z: -0, w: 0.57357645}
-  m_LocalPosition: {x: 243.32, y: 28.14, z: 155.57}
+  m_LocalPosition: {x: 245.07, y: 28.14, z: 157.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -122039,12 +122039,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCloseEvents: 0
   openCloseWindow: 1
-  selectedToolbar: 5
+  selectedToolbar: 0
   _isDead: 0
   _currentHealth: 0
   isImmortal: 0
   fillHealthOnStart: 1
-  maxHealth: 35
+  maxHealth: 25
   healthRecovery: 10
   healthRecoveryDelay: 5
   currentHealthRecoveryDelay: 0
