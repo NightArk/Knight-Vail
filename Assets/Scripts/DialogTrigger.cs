@@ -17,7 +17,7 @@ public class DialogTrigger : MonoBehaviour
     public Text nameText;
     public Text dialogText;
   public TextMeshProUGUI instructionText;
-    public float typingSpeed = 0.1f;
+    public float typingSpeed = 0.03f;
     public AudioClip typingSound;
     public string[] dialogs;
     public int[] characterIds;
@@ -145,7 +145,7 @@ public class DialogTrigger : MonoBehaviour
             }
 
             dialogText.text += sentence[i];
-            yield return new WaitForSeconds(typingSpeed);
+            yield return null;  // Wait 1 frame instead of fixed seconds
         }
 
         if (audioSource != null)

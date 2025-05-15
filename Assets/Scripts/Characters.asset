@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters:
   - idNumber: 0
-    characterName: Player
+    characterName: Axel
     color: {r: 0.6886792, g: 0.14618193, b: 0.14618193, a: 1}
   - idNumber: 1
-    characterName: NPC
+    characterName: Maria
     color: {r: 0.8939694, g: 0.9339623, b: 0.118948035, a: 1}

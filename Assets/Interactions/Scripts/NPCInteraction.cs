@@ -12,7 +12,7 @@ public class NPCInteraction : MonoBehaviour
     public float bounceSpeed = 2f;
     public float bounceHeight = 0.1f;
 
-    private bool isCoin = false;
+    private bool suppressPrompt = false;
 
     private void Start()
     {
@@ -21,8 +21,6 @@ public class NPCInteraction : MonoBehaviour
 
         originalPosition = textPrompt.transform.localPosition;
 
-        if (CompareTag("Coin"))
-            isCoin = true;
     }
 
     void OnTriggerEnter(Collider other)
@@ -32,7 +30,7 @@ public class NPCInteraction : MonoBehaviour
             isPlayerInRange = true;
             Debug.Log("Player is in range to interact.");
 
-            if (textPrompt != null)
+            if (textPrompt != null && !suppressPrompt)
             {
                 textPrompt.gameObject.SetActive(true);
 
@@ -42,6 +40,7 @@ public class NPCInteraction : MonoBehaviour
                 currentFadeCoroutine = StartCoroutine(FadeInText());
             }
         }
+
     }
 
     void OnTriggerExit(Collider other)
@@ -49,6 +48,7 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
+            suppressPrompt = false; // allow prompt to reappear next time
             Debug.Log("Player left the interaction range.");
 
             if (currentFadeCoroutine != null)
@@ -58,21 +58,21 @@ public class NPCInteraction : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         // Optional: coin collection (if needed later)
-        
+
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            HidePrompt();
-
-                Debug.Log("Interacting with NPC...");
-            
+            StartCoroutine(SuppressAndHidePrompt());
+            Debug.Log("Interacting with NPC...");
         }
-        
+
+
 
         // Bounce animation
-        if (textPrompt != null && textPrompt.gameObject.activeSelf)
+        if (!suppressPrompt && textPrompt != null && textPrompt.gameObject.activeSelf)
         {
             float newY = originalPosition.y + Mathf.Sin(Time.time * bounceSpeed) * bounceHeight;
             textPrompt.transform.localPosition = new Vector3(originalPosition.x, newY, originalPosition.z);
@@ -81,7 +81,7 @@ public class NPCInteraction : MonoBehaviour
 
     void LateUpdate()
     {
-        if (textPrompt != null && textPrompt.gameObject.activeSelf)
+        if (!suppressPrompt && textPrompt != null && textPrompt.gameObject.activeSelf)
         {
             Vector3 cameraPosition = Camera.main.transform.position;
             Vector3 direction = (textPrompt.transform.position - cameraPosition).normalized;
@@ -89,12 +89,30 @@ public class NPCInteraction : MonoBehaviour
             textPrompt.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
+    private IEnumerator SuppressAndHidePrompt()
+    {
+        yield return null; // wait one frame
+        suppressPrompt = true;
+        HidePrompt();
+    }
+
 
     public void HidePrompt()
     {
+        if (currentFadeCoroutine != null)
+            StopCoroutine(currentFadeCoroutine);
+
         if (textPrompt != null)
+        {
             textPrompt.gameObject.SetActive(false);
+
+            // Immediately make it fully transparent to avoid sudden reappearance
+            Color c = textPrompt.color;
+            c.a = 0f;
+            textPrompt.color = c;
+        }
     }
+
 
     public void ShowPrompt()
     {
@@ -111,6 +129,8 @@ public class NPCInteraction : MonoBehaviour
 
         while (timeElapsed < fadeDuration)
         {
+            if (suppressPrompt) yield break; // <-- abort if prompt is suppressed
+
             timeElapsed += Time.deltaTime;
             startColor.a = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration);
             textPrompt.color = startColor;
@@ -120,6 +140,7 @@ public class NPCInteraction : MonoBehaviour
         startColor.a = 1f;
         textPrompt.color = startColor;
     }
+
 
     private IEnumerator FadeOutText()
     {
