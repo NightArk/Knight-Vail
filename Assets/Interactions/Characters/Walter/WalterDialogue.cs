@@ -56,8 +56,8 @@ public class WalterDialogue : MonoBehaviour
             new DialogueLine { speaker = "Walter Strider", line = "I escaped the grasp of this lunatic lich ahead now, and before that escaped my clan to venture with two other travelers" },
             new DialogueLine { speaker = "Walter Strider", line = "a smaller priest with a massive afro and a curious souls-and-knives wielding fella." },
             new DialogueLine { speaker = "Axel", line = "Never heard of either, but sounds like a fun circus-in-the-making." },
-            new DialogueLine { speaker = "Walter Strider", line = "Anyways... I appreciate you not murdering me on the spot, so you should know that the lich ahead moves rather fast compared to most enemies." },
-            new DialogueLine { speaker = "Walter Strider", line = "Perserve your stamina." },
+            new DialogueLine { speaker = "Walter Strider", line = "Anyways... I appreciate you not murdering me on the spot, so you should know that the lich \"Nightveil\" ahead moves rather fast compared to most enemies." },
+            new DialogueLine { speaker = "Walter Strider", line = "heals just as much as you hero, and is hardier to boot. Perserve your stamina and take caution." },
             new DialogueLine { speaker = "Axel", line = "Thank you, best of luck traveller!" },
             new DialogueLine { speaker = "Walter Strider", line = "May Shadows guide you friend." }
         };
