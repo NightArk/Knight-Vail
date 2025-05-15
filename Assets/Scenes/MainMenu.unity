@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 0}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -551,8 +551,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Yousif Mohammed - 202200000:\n - Combat System Design & Programming\n-
-    Gameplay Mechanics"
+  m_text: "Yusuf Almukharreq - 202201376:\n - Combat System\n - Movement Mechanics\n
+    - Enemies AI Behaviour\n - Health and Stamina UI"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
   m_sharedMaterial: {fileID: -6004160757558603533, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
@@ -687,8 +687,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sayed Shubbar - 202204573:\n - UI Design & Implementation\n - Gameplay
-    Programming Support (Combat System)"
+  m_text: "Sayed Shubbar - 202204573:\n - UI Design & Implementation\n\t- Main menu\n\t-
+    Pause menu\n\t- Game Complete\n\t- Game Over\n - Gameplay Programming Support
+    (Combat System)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
   m_sharedMaterial: {fileID: -6004160757558603533, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
@@ -2976,7 +2977,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hussain - 202200000:\n - Interaction System\n - Side Quests"
+  m_text: "Hussain - 202200000:\n - Interaction System\n - Side Quests\n - Added
+    NPCs\n - Dialogue"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
   m_sharedMaterial: {fileID: -6004160757558603533, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
@@ -4130,7 +4132,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Mohammed - 201802535\n - Cutscenes\n - Story"
+  m_text: "Mohammed Almahmeed - 201802535:\n - Storyboarding\n - Playtesting\n -
+    NPCs\n - Dialogue\n - Game Documentation"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
   m_sharedMaterial: {fileID: -6004160757558603533, guid: 03deffe1521572a418e87c04417ac73a, type: 2}
@@ -5218,6 +5221,8 @@ MonoBehaviour:
   settingsPanel: {fileID: 604818861}
   creditsPanel: {fileID: 161939108}
   scrollView: {fileID: 1954642256}
+  gameOverPanel: {fileID: 0}
+  gameCompletePanel: {fileID: 0}
 --- !u!4 &1782217954
 Transform:
   m_ObjectHideFlags: 0

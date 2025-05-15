@@ -15,6 +15,9 @@ public class SceneManagement : MonoBehaviour
     public GameObject creditsPanel;
     public GameObject scrollView;
 
+    public GameObject gameOverPanel;
+    public GameObject gameCompletePanel;
+
     void Start()
     {
         if (resumeButton != null)
@@ -30,7 +33,7 @@ public class SceneManagement : MonoBehaviour
 
     void Update()
     {
-        if (!isMainMenu && Input.GetKeyDown(KeyCode.P))
+        if (!isMainMenu && (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)))
         {
             if (isPaused)
             {
@@ -41,6 +44,19 @@ public class SceneManagement : MonoBehaviour
                 PauseGame(); 
             }
         }
+
+        if ((gameOverPanel != null && gameOverPanel.activeSelf ||
+            gameCompletePanel != null && gameCompletePanel.activeSelf) && !isPaused)
+        {
+            AutoPauseForEnd();
+        }
+    }
+    private void AutoPauseForEnd()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void PauseGame()
@@ -57,6 +73,7 @@ public class SceneManagement : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         pauseScreen.SetActive(false);
+        settingsPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -112,5 +129,38 @@ public class SceneManagement : MonoBehaviour
     {
         settingsPanel.SetActive(false);
         pauseScreen.SetActive(true);
+    }
+
+    public void GameOver()
+    {
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    public void GameComplete()
+    {
+        if (gameCompletePanel != null)
+        {
+            gameCompletePanel.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    public void ResumeAfterGameComplete()
+    {
+        if (gameCompletePanel != null)
+        {
+            gameCompletePanel.SetActive(false);
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }
