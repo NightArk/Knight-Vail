@@ -47,19 +47,19 @@ public class EdithDialogue : MonoBehaviour
 
         firstDialogue = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Player", line = "Hello there! My name’s Axel." },
+            new DialogueLine { speaker = "Axel", line = "Hello there! My name’s Axel." },
             new DialogueLine { speaker = "Edith", line = "Oh, hello, Axel! It’s always nice to meet someone new!" },
             new DialogueLine { speaker = "Edith", line = "I’m Edith. You must be new around here?" },
-            new DialogueLine { speaker = "Player", line = "Yes, just passing through. This town is so peaceful." },
+            new DialogueLine { speaker = "Axel", line = "Yes, just passing through. This town is so peaceful." },
             new DialogueLine { speaker = "Edith", line = "It used to be... So calm and full of life. But with the monsters around now, it's been harder to enjoy the peace." },
             new DialogueLine { speaker = "Edith", line = "I really wish things could go back to how they were." },
-            new DialogueLine { speaker = "Player", line = "I think I can help bring things back to how they used to be." },
+            new DialogueLine { speaker = "Axel", line = "I think I can help bring things back to how they used to be." },
             new DialogueLine { speaker = "Edith", line = "Oh, that’s so kind of you, Axel. I really hope we can return to those peaceful days." },
-            new DialogueLine { speaker = "Player", line = "I’ll do my best." },
+            new DialogueLine { speaker = "Axel", line = "I’ll do my best." },
             new DialogueLine { speaker = "Edith", line = "Thank you, dear. Please be careful out there, and know that we’re all cheering you on." },
-            new DialogueLine { speaker = "Player", line = "I’ll keep that in mind." },
+            new DialogueLine { speaker = "Axel", line = "I’ll keep that in mind." },
             new DialogueLine { speaker = "Edith", line = "Take care, and if you ever need a warm tea or a chat, I’m here." },
-            new DialogueLine { speaker = "Player", line = "I’ll be sure to stop by." },
+            new DialogueLine { speaker = "Axel", line = "I’ll be sure to stop by." },
             new DialogueLine { speaker = "Edith", line = "I’ll look forward to it. Stay safe, Axel." }
         };
 

@@ -36,7 +36,7 @@ public class Ran6Dialogue : MonoBehaviour
     {
         dialogueLines = new DialogueLine[]
         {
-            new DialogueLine { speaker = "Man", line = "Lovely weather today, isn't it?\"" }
+            new DialogueLine { speaker = "Man", line = "Lovely weather today, isn't it?" }
         };
 
         dialoguePanel.SetActive(false);

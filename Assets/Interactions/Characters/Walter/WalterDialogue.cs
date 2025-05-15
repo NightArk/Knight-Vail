@@ -51,7 +51,7 @@ public class WalterDialogue : MonoBehaviour
             new DialogueLine { speaker = "Walter Strider", line = "...huh?" },
             new DialogueLine { speaker = "Walter Strider", line = "You aren't gonna slash me like you do my bretheren?" },
             new DialogueLine { speaker = "Axel", line = "Really could, but It feels sad to slash you when you are hiding all by your lonesome." },
-            new DialogueLine { speaker = "Axel", line = "Plus I can't be Arsed this far into this quest gotta save my quest for what is to come." },
+            new DialogueLine { speaker = "Axel", line = "Plus I can't be Arsed this far into this quest gotta save my strength for what is to come." },
             new DialogueLine { speaker = "Walter Strider", line = "Appreciate it, I am a craftsman not much of a fighter." },
             new DialogueLine { speaker = "Walter Strider", line = "I escaped the grasp of this lunatic lich ahead now, and before that escaped my clan to venture with two other travelers" },
             new DialogueLine { speaker = "Walter Strider", line = "a smaller priest with a massive afro and a curious souls-and-knives wielding fella." },
